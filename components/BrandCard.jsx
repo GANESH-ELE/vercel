@@ -3,7 +3,7 @@ import { ArrowRight } from 'lucide-react';
 import { getProductsByBrand } from '@/lib/data';
 
 export default function BrandCard({ brand }) {
-  const count = getProductsByBrand(brand.slug).length;
+  const count = brand.productCount ?? getProductsByBrand(brand.slug).length;
   const initials = brand.name.slice(0, 2).toUpperCase();
   return (
     <Link

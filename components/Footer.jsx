@@ -1,10 +1,10 @@
 import Link from 'next/link';
 import { Phone, MapPin, Mail, Clock, Facebook, Instagram, Youtube, Store } from 'lucide-react';
 import config from '@/lib/config';
-import { getAllCategories } from '@/lib/data';
+import { getAllCategories } from '@/lib/catalog';
 
-export default function Footer() {
-  const categories = getAllCategories().slice(0, 8);
+export default async function Footer() {
+  const categories = (await getAllCategories()).slice(0, 8);
   return (
     <footer className="mt-16 border-t border-border bg-secondary/40">
       <div className="container py-12">

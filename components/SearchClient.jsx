@@ -5,13 +5,14 @@ import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import SearchBar from './SearchBar';
 import ProductGrid from './ProductGrid';
-import { searchProducts, getAllCategories, getPopularProducts } from '@/lib/data';
+import { filterProductsByQuery } from '@/lib/data';
 
-export default function SearchClient() {
+// Receives the full catalog from the server page (Sanity or demo data) and
+// filters client-side so typing feels instant.
+export default function SearchClient({ products = [], categories = [], brands = [] }) {
   const sp = useSearchParams();
   const q = sp.get('q') || '';
-  const results = useMemo(() => searchProducts(q), [q]);
-  const categories = getAllCategories();
+  const results = useMemo(() => filterProductsByQuery(products, q, { brands, categories }), [products, brands, categories, q]);
   const suggestions = ['Jaquar', 'Berger', 'CPVC pipe', 'water tank', 'ceiling fan', 'wash basin'];
 
   return (

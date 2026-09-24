@@ -9,7 +9,7 @@ import { generalEnquiryUrl } from '@/lib/whatsapp';
 import {
   getAllCategories, getAllBrands, getFeaturedProducts, getNewArrivals,
   getPopularProducts, getProductsByCategory,
-} from '@/lib/data';
+} from '@/lib/catalog';
 
 const WHY = [
   { icon: ShieldCheck, title: 'Genuine Products', desc: 'Only authentic products from trusted, well-known brands.' },
@@ -20,16 +20,12 @@ const WHY = [
   { icon: MapPin, title: 'Mangaluru-Based', desc: 'Proudly serving Mangaluru and surrounding areas.' },
 ];
 
-export default function HomePage() {
-  const categories = getAllCategories();
-  const brands = getAllBrands();
-  const featured = getFeaturedProducts();
-  const newArrivals = getNewArrivals();
-  const popular = getPopularProducts();
-  const projects = [
-    ...getProductsByCategory('bathroom-fittings'),
-    ...getProductsByCategory('sanitaryware'),
-  ].slice(0, 8);
+export default async function HomePage() {
+  const [categories, brands, featured, newArrivals, popular, bath, sanitary] = await Promise.all([
+    getAllCategories(), getAllBrands(), getFeaturedProducts(), getNewArrivals(),
+    getPopularProducts(), getProductsByCategory('bathroom-fittings'), getProductsByCategory('sanitaryware'),
+  ]);
+  const projects = [...bath, ...sanitary].slice(0, 8);
 
   return (
     <>
@@ -40,7 +36,7 @@ export default function HomePage() {
         <div className="container">
           <div className="mb-6 text-center">
             <h2 className="text-2xl font-extrabold text-foreground sm:text-3xl">Shop by Category</h2>
-            <p className="mt-2 text-sm text-muted-foreground">Explore our full range of building and home materials</p>
+            <p className="mt-2 text-sm text-muted-foreground">Explore our full range of electrical, plumbing and building materials</p>
           </div>
           <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-5">
             {categories.map((c) => (<CategoryCard key={c.id} category={c} />))}

@@ -9,20 +9,33 @@ import ProductCarousel from '@/components/ProductCarousel';
 import config from '@/lib/config';
 import { productEnquiryUrl } from '@/lib/whatsapp';
 import {
-  getProductBySlug, getAllProducts, getBrandName, getCategoryName,
+  getProductBySlug, getAllProducts, getBrandBySlug, getCategoryBySlug,
   getProductsByCategory, getSameBrandProducts, getAlternativeProducts,
-} from '@/lib/data';
+} from '@/lib/catalog';
+
+// Re-fetch content from Sanity at most once a minute (ISR on Vercel).
+export const revalidate = 60;
+export const dynamicParams = true;
 
 export async function generateStaticParams() {
-  return getAllProducts().map((p) => ({ slug: p.slug }));
+  return (await getAllProducts()).map((p) => ({ slug: p.slug }));
+}
+
+async function names(product) {
+  const [b, c] = await Promise.all([getBrandBySlug(product.brand), getCategoryBySlug(product.category)]);
+  return {
+    brandName: product.brandName || b?.name || product.brand,
+    categoryName: product.categoryName || c?.name || product.category,
+  };
 }
 
 export async function generateMetadata({ params }) {
   const { slug } = await params;
-  const product = getProductBySlug(slug);
+  const product = await getProductBySlug(slug);
   if (!product) return { title: 'Product not found' };
+  const { brandName } = await names(product);
   return {
-    title: `${product.name} — ${getBrandName(product.brand)}`,
+    title: `${product.name} — ${brandName}`,
     description: product.shortDescription,
     openGraph: { title: product.name, description: product.shortDescription, images: [product.image] },
   };
@@ -30,18 +43,25 @@ export async function generateMetadata({ params }) {
 
 export default async function ProductDetailPage({ params }) {
   const { slug } = await params;
-  const product = getProductBySlug(slug);
+  const product = await getProductBySlug(slug);
   if (!product) notFound();
 
   const phoneHref = `tel:${config.phone.replace(/\s/g, '')}`;
-  const similar = getProductsByCategory(product.category).filter((p) => p.id !== product.id).slice(0, 8);
-  const together = (product.relatedProductIds || []).map((id) => getAllProducts().find((p) => p.id === id)).filter(Boolean);
-  const alternatives = getAlternativeProducts(product, 8);
-  const sameBrand = getSameBrandProducts(product, 8);
+  const [{ brandName, categoryName }, inCategory, allProducts, alternatives, sameBrand] = await Promise.all([
+    names(product),
+    getProductsByCategory(product.category),
+    getAllProducts(),
+    getAlternativeProducts(product, 8),
+    getSameBrandProducts(product, 8),
+  ]);
+  const similar = inCategory.filter((p) => p.id !== product.id).slice(0, 8);
+  const together = (product.relatedProductIds || []).map((id) => allProducts.find((p) => p.id === id)).filter(Boolean);
+  const getBrandName = () => brandName;
+  const getCategoryName = () => categoryName;
 
   const keyFeatures = [
-    `Genuine ${getBrandName(product.brand)} product`,
-    `Category: ${getCategoryName(product.category)}`,
+    `Genuine ${brandName} product`,
+    `Category: ${categoryName}`,
     product.shortDescription,
     'Contact us for the best price and availability',
   ];

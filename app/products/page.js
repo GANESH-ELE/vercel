@@ -1,17 +1,15 @@
 import { Suspense } from 'react';
 import CatalogExplorer from '@/components/CatalogExplorer';
 import Breadcrumbs from '@/components/Breadcrumbs';
-import { getAllProducts, getAllCategories, getAllBrands } from '@/lib/data';
+import { getAllProducts, getAllCategories, getAllBrands } from '@/lib/catalog';
 
 export const metadata = {
   title: 'All Products',
-  description: 'Browse the full catalog of building and home materials. Filter by category, brand and availability, then enquire on WhatsApp.',
+  description: 'Browse the full catalog of electrical, plumbing and building materials. Filter by category, brand and availability, then enquire on WhatsApp.',
 };
 
-export default function ProductsPage() {
-  const products = getAllProducts();
-  const categories = getAllCategories();
-  const brands = getAllBrands();
+export default async function ProductsPage() {
+  const [products, categories, brands] = await Promise.all([getAllProducts(), getAllCategories(), getAllBrands()]);
   return (
     <div className="container py-8">
       <Breadcrumbs items={[{ label: 'Products' }]} />

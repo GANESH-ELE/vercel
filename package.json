@@ -3,11 +3,13 @@
     "version": "0.1.0",
     "private": true,
     "scripts": {
-        "dev": "NODE_OPTIONS='--max-old-space-size=512' next dev --hostname 0.0.0.0 --port 3000",
+        "dev": "NODE_OPTIONS='--max-old-space-size=1400' next dev --hostname 0.0.0.0 --port 3000",
         "dev:no-reload": "next dev --hostname 0.0.0.0 --port 3000",
         "dev:webpack": "next dev --hostname 0.0.0.0 --port 3000",
         "build": "next build",
-        "start": "next start"
+        "start": "next start",
+        "seed:sanity": "tsx scripts/seed-sanity.mjs",
+        "seed:sanity:no-images": "tsx scripts/seed-sanity.mjs --no-images"
     },
     "dependencies": {
         "@hookform/resolvers": "5.1.1",
@@ -38,6 +40,8 @@
         "@radix-ui/react-toggle": "1.1.9",
         "@radix-ui/react-toggle-group": "1.1.10",
         "@radix-ui/react-tooltip": "1.2.7",
+        "@sanity/client": "6.27.2",
+        "@sanity/image-url": "1.2.0",
         "@tanstack/react-query": "5.56.2",
         "@tanstack/react-table": "8.21.3",
         "axios": "1.18.0",
@@ -48,11 +52,13 @@
         "dayjs": "1.11.13",
         "embla-carousel-react": "8.6.0",
         "framer-motion": "11.18.0",
+        "googleapis": "148.0.0",
         "input-otp": "1.4.2",
         "lodash": "4.18.1",
         "lucide-react": "0.516.0",
         "mongodb": "6.6.0",
         "next": "15.5.18",
+        "next-sanity": "9.8.40",
         "next-themes": "0.4.6",
         "react": "18.3.1",
         "react-day-picker": "9.7.0",
@@ -60,7 +66,9 @@
         "react-hook-form": "7.58.1",
         "react-resizable-panels": "3.0.3",
         "recharts": "2.15.3",
+        "sanity": "3.68.3",
         "sonner": "2.0.5",
+        "styled-components": "6.1.13",
         "swr": "2.3.8",
         "tailwind-merge": "3.3.1",
         "tailwindcss-animate": "1.0.7",
@@ -73,7 +81,8 @@
         "autoprefixer": "10.4.19",
         "globals": "16.2.0",
         "postcss": "8",
-        "tailwindcss": "3.4.1"
+        "tailwindcss": "3.4.1",
+        "tsx": "^4.23.15"
     },
     "resolutions": {
         "follow-redirects": "1.16.0",

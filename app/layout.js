@@ -4,6 +4,7 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import StickyWhatsApp from '@/components/StickyWhatsApp';
 import { Toaster } from '@/components/ui/sonner';
+import SiteChrome from '@/components/SiteChrome';
 import config from '@/lib/config';
 
 const base = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
@@ -56,11 +57,14 @@ export default function RootLayout({ children }) {
       </head>
       <body>
         <Providers>
-          <Header />
-          <main className="min-h-[60vh]">{children}</main>
-          <Footer />
-          <StickyWhatsApp />
-          <Toaster position="top-center" richColors />
+          <SiteChrome
+            header={<Header />}
+            footer={<Footer />}
+            sticky={<StickyWhatsApp />}
+            toaster={<Toaster position="top-center" richColors />}
+          >
+            {children}
+          </SiteChrome>
         </Providers>
       </body>
     </html>

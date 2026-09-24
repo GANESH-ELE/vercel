@@ -1,14 +1,14 @@
 import Breadcrumbs from '@/components/Breadcrumbs';
 import BrandCard from '@/components/BrandCard';
-import { getAllBrands } from '@/lib/data';
+import { getAllBrands } from '@/lib/catalog';
 
 export const metadata = {
   title: 'Brands',
   description: 'Explore authentic products from trusted brands including Berger, Finolex, Astral, Cera, Jaquar, Havells, Sintex, Crompton and Bosch.',
 };
 
-export default function BrandsPage() {
-  const brands = getAllBrands();
+export default async function BrandsPage() {
+  const brands = await getAllBrands();
   return (
     <div className="container py-8">
       <Breadcrumbs items={[{ label: 'Brands' }]} />

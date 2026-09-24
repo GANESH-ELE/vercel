@@ -5,7 +5,7 @@ import { getProductsByCategory } from '@/lib/data';
 
 export default function CategoryCard({ category }) {
   const Icon = Icons[category.icon] || Icons.Package;
-  const count = getProductsByCategory(category.slug).length;
+  const count = category.productCount ?? getProductsByCategory(category.slug).length;
   return (
     <Link
       href={`/categories/${category.slug}`}

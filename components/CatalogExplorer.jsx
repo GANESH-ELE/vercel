@@ -6,17 +6,11 @@ import { SlidersHorizontal } from 'lucide-react';
 import { Sheet, SheetContent, SheetTrigger, SheetHeader, SheetTitle } from '@/components/ui/sheet';
 import Filters from './Filters';
 import ProductGrid from './ProductGrid';
-import { getBrandName, getCategoryName } from '@/lib/data';
+import { filterProductsByQuery } from '@/lib/data';
 
 function matchesQuery(p, q) {
   if (!q) return true;
-  const haystack = [
-    p.name, p.brand, getBrandName(p.brand), p.category, getCategoryName(p.category),
-    p.sku, p.productCode, p.shortDescription, p.description,
-    ...(p.tags || []),
-    ...(p.specifications || []).map((s) => `${s.label} ${s.value}`),
-  ].join(' ').toLowerCase();
-  return haystack.includes(q.toLowerCase());
+  return filterProductsByQuery([p], q).length > 0;
 }
 
 function sortProducts(list, sort) {

@@ -28,7 +28,7 @@ export default function ProductCard({ product }) {
 
       <div className="flex flex-1 flex-col p-4">
         <p className="text-xs font-semibold uppercase tracking-wide text-primary">
-          {getBrandName(product.brand)}
+          {product.brandName || getBrandName(product.brand)}
         </p>
         <Link href={`/products/${product.slug}`}>
           <h3 className="mt-1 line-clamp-2 text-sm font-semibold text-foreground hover:text-primary">

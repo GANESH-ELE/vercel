@@ -3,27 +3,29 @@ import { notFound } from 'next/navigation';
 import Breadcrumbs from '@/components/Breadcrumbs';
 import CatalogExplorer from '@/components/CatalogExplorer';
 import WhatsAppButton from '@/components/WhatsAppButton';
-import { getBrandBySlug, getProductsByBrand, getAllBrands, getAllCategories } from '@/lib/data';
+import { getBrandBySlug, getProductsByBrand, getAllBrands, getAllCategories } from '@/lib/catalog';
 import { buildWhatsAppUrl } from '@/lib/whatsapp';
 
+export const revalidate = 60;
+export const dynamicParams = true;
+
 export async function generateStaticParams() {
-  return getAllBrands().map((b) => ({ slug: b.slug }));
+  return (await getAllBrands()).map((b) => ({ slug: b.slug }));
 }
 
 export async function generateMetadata({ params }) {
   const { slug } = await params;
-  const brand = getBrandBySlug(slug);
+  const brand = await getBrandBySlug(slug);
   if (!brand) return { title: 'Brand not found' };
   return { title: `${brand.name} Products`, description: brand.description };
 }
 
 export default async function BrandPage({ params }) {
   const { slug } = await params;
-  const brand = getBrandBySlug(slug);
+  const brand = await getBrandBySlug(slug);
   if (!brand) notFound();
 
-  const products = getProductsByBrand(slug);
-  const categories = getAllCategories();
+  const [products, categories] = await Promise.all([getProductsByBrand(slug), getAllCategories()]);
   const waUrl = buildWhatsAppUrl(`Hello, I would like to enquire about ${brand.name} products. Please share details.`);
 
   return (

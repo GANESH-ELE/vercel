@@ -12,7 +12,7 @@ export default function Hero() {
       <div className="container relative py-16 sm:py-24">
         <div className="max-w-2xl">
           <span className="inline-flex items-center gap-2 rounded-full bg-white/15 px-3 py-1 text-xs font-semibold text-white ring-1 ring-white/25">
-            <MapPin className="h-3.5 w-3.5" /> Mangaluru’s trusted building materials showroom
+            <MapPin className="h-3.5 w-3.5" /> Mangaluru’s trusted electricals & building materials showroom
           </span>
           <h1 className="mt-5 text-3xl font-extrabold leading-tight text-white sm:text-5xl">
             Everything for your home &amp; construction, all in one place

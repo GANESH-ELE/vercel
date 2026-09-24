@@ -20,11 +20,12 @@ export default function EnquiryForm({ variant = 'contact', product }) {
   const [errors, setErrors] = useState({});
   const [submitted, setSubmitted] = useState(false);
   const [waLink, setWaLink] = useState('');
+  const [saveState, setSaveState] = useState('idle'); // idle | saving | saved | failed
 
   const set = (k, v) => setValues((s) => ({ ...s, [k]: v }));
   const showProductFields = variant === 'quote' || variant === 'product';
 
-  const onSubmit = (e) => {
+  const onSubmit = async (e) => {
     e.preventDefault();
     const { errors: errs, valid } = validateEnquiry(values);
     setErrors(errs);
@@ -32,12 +33,37 @@ export default function EnquiryForm({ variant = 'contact', product }) {
       toast.error('Please fix the highlighted fields.');
       return;
     }
-    // First version: no DB / email. Build a WhatsApp message and show success.
+    // 1) Open WhatsApp immediately (must happen synchronously in the click
+    //    handler or mobile browsers block the popup).
     const link = quoteUrl(values);
     setWaLink(link);
     setSubmitted(true);
-    toast.success('Enquiry ready! Opening WhatsApp…');
     if (typeof window !== 'undefined') window.open(link, '_blank');
+
+    // 2) Persist the enquiry (Sanity + Google Sheet) via our API route.
+    setSaveState('saving');
+    try {
+      const res = await fetch('/api/enquiries', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          ...values,
+          source: variant,
+          page: typeof window !== 'undefined' ? window.location.href : '',
+        }),
+      });
+      const data = await res.json().catch(() => ({}));
+      if (res.ok && data.ok) {
+        setSaveState('saved');
+        toast.success('Enquiry sent! We have received your details.');
+      } else {
+        setSaveState('failed');
+        toast.message('Opening WhatsApp…', { description: 'We could not save a copy of your enquiry, but WhatsApp will still reach us.' });
+      }
+    } catch {
+      setSaveState('failed');
+      toast.message('Opening WhatsApp…', { description: 'We could not save a copy of your enquiry, but WhatsApp will still reach us.' });
+    }
   };
 
   const inputCls = 'h-11 w-full rounded-lg border border-border bg-white px-3 text-sm outline-none focus:border-primary focus:ring-2 focus:ring-ring/40';
@@ -49,12 +75,15 @@ export default function EnquiryForm({ variant = 'contact', product }) {
         <CheckCircle2 className="mx-auto h-10 w-10 text-emerald-600" />
         <h3 className="mt-3 text-lg font-bold text-foreground">Thank you, {values.name.split(' ')[0]}!</h3>
         <p className="mt-1 text-sm text-muted-foreground">
-          Your enquiry has been prepared. If WhatsApp did not open automatically, tap the button below.
+          {saveState === 'saving' && 'Saving your enquiry…'}
+          {saveState === 'saved' && 'Your enquiry has been received by our team. '}
+          {saveState === 'failed' && 'Your enquiry has been prepared. '}
+          {saveState !== 'saving' && 'If WhatsApp did not open automatically, tap the button below.'}
         </p>
         <div className="mt-4 flex justify-center">
           <WhatsAppButton href={waLink} size="lg">Open WhatsApp</WhatsAppButton>
         </div>
-        <button onClick={() => setSubmitted(false)} className="mt-4 text-sm font-semibold text-primary hover:underline">
+        <button onClick={() => { setSubmitted(false); setSaveState('idle'); }} className="mt-4 text-sm font-semibold text-primary hover:underline">
           Send another enquiry
         </button>
       </div>
@@ -126,7 +155,7 @@ export default function EnquiryForm({ variant = 'contact', product }) {
       <button type="submit" className="inline-flex h-12 w-full items-center justify-center gap-2 rounded-lg bg-primary px-6 text-sm font-bold text-primary-foreground hover:brightness-95 sm:w-auto">
         <Send className="h-4 w-4" /> {variant === 'quote' ? 'Send Quote Request' : 'Send Enquiry'}
       </button>
-      <p className="text-xs text-muted-foreground">We’ll prepare a WhatsApp message with your details. No account or payment needed.</p>
+      <p className="text-xs text-muted-foreground">Your enquiry is saved for our team and a WhatsApp message is prepared with your details. No account or payment needed.</p>
     </form>
   );
 }

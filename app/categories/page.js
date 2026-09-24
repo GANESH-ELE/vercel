@@ -1,14 +1,14 @@
 import Breadcrumbs from '@/components/Breadcrumbs';
 import CategoryCard from '@/components/CategoryCard';
-import { getAllCategories } from '@/lib/data';
+import { getAllCategories } from '@/lib/catalog';
 
 export const metadata = {
   title: 'Product Categories',
   description: 'Browse all product categories — plumbing, sanitaryware, bathroom fittings, electrical, paints, tanks, lights, fans and more.',
 };
 
-export default function CategoriesPage() {
-  const categories = getAllCategories();
+export default async function CategoriesPage() {
+  const categories = await getAllCategories();
   return (
     <div className="container py-8">
       <Breadcrumbs items={[{ label: 'Categories' }]} />

@@ -1,15 +1,15 @@
 import Breadcrumbs from '@/components/Breadcrumbs';
 import EnquiryForm from '@/components/EnquiryForm';
-import { getProductBySlug } from '@/lib/data';
+import { getProductBySlug } from '@/lib/catalog';
 
 export const metadata = {
   title: 'Request a Quote',
-  description: 'Request a quote for building and home materials. Tell us what you need and we’ll respond on WhatsApp.',
+  description: 'Request a quote for electrical, plumbing and building materials. Tell us what you need and we’ll respond on WhatsApp.',
 };
 
 export default async function RequestQuotePage({ searchParams }) {
   const sp = (await searchParams) || {};
-  const product = sp.product ? getProductBySlug(sp.product) : null;
+  const product = sp.product ? await getProductBySlug(sp.product) : null;
 
   return (
     <div className="container py-8">

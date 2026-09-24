@@ -4,15 +4,18 @@ import Link from 'next/link';
 import { FileText } from 'lucide-react';
 import Breadcrumbs from '@/components/Breadcrumbs';
 import CatalogExplorer from '@/components/CatalogExplorer';
-import { getCategoryBySlug, getProductsByCategory, getAllCategories, getAllBrands } from '@/lib/data';
+import { getCategoryBySlug, getProductsByCategory, getAllCategories, getAllBrands } from '@/lib/catalog';
+
+export const revalidate = 60;
+export const dynamicParams = true;
 
 export async function generateStaticParams() {
-  return getAllCategories().map((c) => ({ slug: c.slug }));
+  return (await getAllCategories()).map((c) => ({ slug: c.slug }));
 }
 
 export async function generateMetadata({ params }) {
   const { slug } = await params;
-  const category = getCategoryBySlug(slug);
+  const category = await getCategoryBySlug(slug);
   if (!category) return { title: 'Category not found' };
   return {
     title: `${category.name}`,
@@ -23,11 +26,10 @@ export async function generateMetadata({ params }) {
 
 export default async function CategoryPage({ params }) {
   const { slug } = await params;
-  const category = getCategoryBySlug(slug);
+  const category = await getCategoryBySlug(slug);
   if (!category) notFound();
 
-  const products = getProductsByCategory(slug);
-  const brands = getAllBrands();
+  const [products, brands] = await Promise.all([getProductsByCategory(slug), getAllBrands()]);
 
   return (
     <div className="container py-8">

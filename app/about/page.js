@@ -6,7 +6,7 @@ import { generalEnquiryUrl } from '@/lib/whatsapp';
 
 export const metadata = {
   title: 'About Us',
-  description: `Learn about ${config.businessName}, a trusted building and home materials showroom in Mangaluru, Karnataka.`,
+  description: `Learn about ${config.businessName}, a trusted electrical, plumbing and building materials showroom in Mangaluru, Karnataka.`,
 };
 
 const VALUES = [
@@ -23,7 +23,7 @@ export default function AboutPage() {
       <div className="mx-auto max-w-3xl">
         <h1 className="text-3xl font-extrabold text-foreground sm:text-4xl">About {config.businessName}</h1>
         <p className="mt-4 text-base leading-relaxed text-muted-foreground">
-          {config.businessName} is a trusted building and home materials showroom based in {config.city}. For years we have
+          {config.businessName} is a trusted electrical, plumbing and building materials showroom based in {config.city}. For years we have
           helped homeowners, builders, plumbers, electricians and contractors find the right products for their projects
           — all under one roof. From the first pipe to the final coat of paint, we’re here to make sourcing materials simple.
         </p>
