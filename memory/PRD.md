@@ -47,3 +47,9 @@ Next.js 15 App Router (JavaScript), Tailwind, shadcn/ui, yarn. Mock data in `lib
 
 ## Package pins (React-18 compatible, from playbook)
 next-sanity@9.8.40 sanity@3.68.3 styled-components@6.1.13 @sanity/client@6.27.2 @sanity/image-url@1.2.0 googleapis
+
+## Vercel build fix (2025-06)
+- Vercel used npm (yarn.lock was never committed) -> ERESOLVE: next-sanity@9.8.40 peer needs sanity ^3.71.1.
+- Fixed: sanity -> 3.71.2; pinned @portabletext/editor 1.26.3 via BOTH `resolutions` (yarn) and `overrides` (npm) because newer 1.x removed exports sanity 3.71 imports.
+- Added .yarnrc (--ignore-engines; sandbox Node 20 vs sub-dep wanting Node 22; Vercel Node 22 fine) and committed-ready package-lock.json + yarn.lock.
+- Verified: `npm install --package-lock-only` resolves; `yarn build` passes; site + /studio OK.
