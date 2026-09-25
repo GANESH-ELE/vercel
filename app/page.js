@@ -17,7 +17,7 @@ const WHY = [
   { icon: Boxes, title: 'Wide Product Range', desc: 'From plumbing to paints — everything under one roof.' },
   { icon: Store, title: 'Local Showroom', desc: 'Visit us to see products in person before you decide.' },
   { icon: MessageCircle, title: 'WhatsApp Enquiries', desc: 'Quick answers on price and availability via WhatsApp.' },
-  { icon: MapPin, title: 'Mangaluru-Based', desc: 'Proudly serving Mangaluru and surrounding areas.' },
+  { icon: MapPin, title: 'Brahmavara-Based', desc: 'Proudly serving Brahmavara and surrounding areas.' },
 ];
 
 export default async function HomePage() {
@@ -116,7 +116,7 @@ export default async function HomePage() {
                   <MessageCircle className="h-5 w-5" /> Enquire on WhatsApp
                 </a>
                 <a href={`tel:${config.phone.replace(/\s/g, '')}`} className="inline-flex h-12 items-center justify-center gap-2 rounded-lg bg-white font-bold text-primary hover:bg-white/90">
-                  <Phone className="h-5 w-5" /> Call the Showroom
+                  <Phone className="h-5 w-5" /> Call Us
                 </a>
                 <a href={config.googleMapsUrl} target="_blank" rel="noopener noreferrer" className="inline-flex h-12 items-center justify-center gap-2 rounded-lg border-2 border-white/60 font-bold text-white hover:bg-white/10">
                   <MapPin className="h-5 w-5" /> Open in Google Maps

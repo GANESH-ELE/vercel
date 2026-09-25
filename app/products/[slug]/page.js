@@ -95,14 +95,14 @@ export default async function ProductDetailPage({ params }) {
             {/* Price policy */}
             <div className="mt-5 rounded-lg border border-dashed border-primary/30 bg-secondary/40 p-4">
               <p className="text-sm font-semibold text-foreground">Contact for Price</p>
-              <p className="text-xs text-muted-foreground">We share our best price on enquiry. Message us on WhatsApp or call the showroom.</p>
+              <p className="text-xs text-muted-foreground">We share our best price on enquiry. Message us on WhatsApp or call Us.</p>
             </div>
 
             {/* Actions */}
             <div className="mt-5 grid gap-3 sm:grid-cols-2">
               <WhatsAppButton href={productEnquiryUrl(product)} size="lg" className="w-full">Request Price on WhatsApp</WhatsAppButton>
               <a href={phoneHref} className="inline-flex h-12 w-full items-center justify-center gap-2 rounded-lg bg-primary px-6 text-sm font-bold text-primary-foreground hover:brightness-95">
-                <Phone className="h-4 w-4" /> Call Showroom
+                <Phone className="h-4 w-4" /> Call Us
               </a>
               <WhatsAppButton href={productEnquiryUrl(product)} size="lg" variant="outline" className="w-full">Enquire on WhatsApp</WhatsAppButton>
               <Link href={`/request-quote?product=${product.slug}`} className="inline-flex h-12 w-full items-center justify-center gap-2 rounded-lg border border-border px-6 text-sm font-bold text-foreground hover:bg-secondary">

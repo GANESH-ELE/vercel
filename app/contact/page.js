@@ -6,7 +6,7 @@ import { generalEnquiryUrl } from '@/lib/whatsapp';
 
 export const metadata = {
   title: 'Contact Us',
-  description: `Contact ${config.businessName} in Mangaluru by phone, WhatsApp or the enquiry form.`,
+  description: `Contact ${config.businessName} in Brahmavara by phone, WhatsApp or the enquiry form.`,
 };
 
 export default function ContactPage() {

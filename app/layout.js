@@ -12,19 +12,19 @@ const base = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
 export const metadata = {
   metadataBase: new URL(base),
   title: {
-    default: `${config.businessName} | Building & Home Materials Showroom in Mangaluru`,
+    default: `${config.businessName} | Building & Home Materials in Brahmavara`,
     template: `%s | ${config.businessName}`,
   },
   description:
     'Browse plumbing, pipes & fittings, sanitaryware, bathroom fittings, electrical, hardware, Berger Paints, water tanks, lights & fans and tools. Enquire on WhatsApp for price and availability.',
   keywords: [
-    'building materials Mangaluru', 'plumbing', 'sanitaryware', 'bathroom fittings',
+    'building materials Brahmavara', 'plumbing', 'sanitaryware', 'bathroom fittings',
     'electrical', 'Berger Paints', 'water tanks', 'hardware', 'pipes and fittings',
   ],
   openGraph: {
     type: 'website',
-    title: `${config.businessName} | Building & Home Materials Showroom`,
-    description: 'Your complete building & home materials showroom in Mangaluru. Enquire on WhatsApp.',
+    title: `${config.businessName} | Building & Home Materials in Brahmavara`,
+    description: 'Your complete building & home materials showroom in Brahmavara. Enquire on WhatsApp.',
     siteName: config.businessName,
   },
   robots: { index: true, follow: true },
@@ -40,12 +40,12 @@ const localBusinessJsonLd = {
   address: {
     '@type': 'PostalAddress',
     streetAddress: `${config.address.line1}, ${config.address.line2}`,
-    addressLocality: 'Mangaluru',
+    addressLocality: 'Brahmavara',
     addressRegion: 'Karnataka',
-    postalCode: '575001',
+    postalCode: '576213',
     addressCountry: 'IN',
   },
-  areaServed: 'Mangaluru, Karnataka',
+  areaServed: 'Brahmavara, Karnataka',
 };
 
 export default function RootLayout({ children }) {
