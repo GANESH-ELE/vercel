@@ -5,9 +5,9 @@
 // =============================================================
 import { defineConfig } from 'sanity';
 import { structureTool } from 'sanity/structure';
-import { schemaTypes } from './sanity/schemas';
-import { structure } from './sanity/structure';
-import { projectId, dataset } from './sanity/env';
+import { schemaTypes } from './cms/schemas';
+import { structure } from './cms/structure';
+import { projectId, dataset } from './cms/env';
 
 export default defineConfig({
   name: 'default',

@@ -27,6 +27,7 @@ Next.js 15 App Router (JavaScript), Tailwind, shadcn/ui, yarn. Mock data in `lib
 3. Vercel deploy via GitHub ("Save to GitHub" button); write DEPLOY.md + CMS-GUIDE.md (how to add items in Sanity).
 
 ## Done (2025-06, this session)
+- NOTE: CMS folder renamed sanity/ -> cms/ (avoid baseUrl collision with `sanity` package); sanity.cli.js added; `npx sanity schema validate` = 0 errors
 - Sanity CMS integrated (schemas product/category/brand/enquiry, Studio at /studio, structure.js sidebar, lib/catalog.js async layer w/ demo fallback, seed script `yarn seed:sanity`)
 - POST /api/enquiries -> Sanity + Google Sheets + Mongo backup; EnquiryForm wired (WhatsApp opens first, then saves)
 - DEPLOY.md, CMS-GUIDE.md, README updated; .env.example extended
@@ -38,7 +39,7 @@ Next.js 15 App Router (JavaScript), Tailwind, shadcn/ui, yarn. Mock data in `lib
 ## Sanity CONNECTED (2025-06)
 - Project ID 67e0wbk7, dataset production; token in /app/.env (SANITY_WRITE_TOKEN). Seeded: 16 products, 10 categories, 9 brands, 19 images, related links (seed is 2-pass for reference integrity).
 - Verified: site reads from Sanity (cdn.sanity.io images), POST /api/enquiries -> Sanity enquiry doc saved, /studio renders real Studio login.
-- Still pending: Google Sheets credentials (optional). User must log in to /studio with their Sanity account.
+- Google Sheets: USER CHOSE TO SKIP (code remains optional/skipped). User has not yet logged in to /studio.
 
 ## Credentials needed (pending from user)
 - Sanity: NEXT_PUBLIC_SANITY_PROJECT_ID, NEXT_PUBLIC_SANITY_DATASET, SANITY_WRITE_TOKEN

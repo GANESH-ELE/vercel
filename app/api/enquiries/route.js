@@ -10,7 +10,7 @@ import { NextResponse } from 'next/server';
 import { MongoClient } from 'mongodb';
 import { v4 as uuidv4 } from 'uuid';
 import { validateEnquiry } from '@/lib/validation';
-import { getWriteClient } from '@/sanity/lib/client';
+import { getWriteClient } from '@/cms/lib/client';
 import { appendEnquiryRow, isSheetsConfigured } from '@/lib/sheets';
 
 export const runtime = 'nodejs';

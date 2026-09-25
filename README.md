@@ -32,9 +32,9 @@ yarn seed:sanity:no-images # same, without uploading images
 | Business info (name, phone, WhatsApp, email, address, hours, maps, theme, socials) | `lib/config.js` (or `NEXT_PUBLIC_*` env vars) |
 | Products / Categories / Brands (live site) | **Sanity Studio** at `/studio` |
 | Demo catalog (fallback when Sanity is not configured) | `lib/data.js` |
-| Sanity schemas (fields shown in Studio) | `sanity/schemas/*.js` |
-| Studio sidebar | `sanity/structure.js` |
-| GROQ queries + data normalisation | `sanity/lib/queries.js`, `lib/catalog.js` |
+| Sanity schemas (fields shown in Studio) | `cms/schemas/*.js` |
+| Studio sidebar | `cms/structure.js` |
+| GROQ queries + data normalisation | `cms/lib/queries.js`, `lib/catalog.js` |
 | Enquiry API (Sanity + Google Sheets + Mongo backup) | `app/api/enquiries/route.js`, `lib/sheets.js` |
 | WhatsApp message builders | `lib/whatsapp.js` |
 | Form validation (shared client + server) | `lib/validation.js` |

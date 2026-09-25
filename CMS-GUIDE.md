@@ -127,4 +127,4 @@ https://www.sanity.io/manage → your project → **Members → Invite** → ent
 
 **Can I change the shop phone number / address / WhatsApp number?** Those are website settings, not content: update the `NEXT_PUBLIC_BUSINESS_*` / `NEXT_PUBLIC_WHATSAPP_NUMBER` environment variables in Vercel and redeploy (see `DEPLOY.md`), or edit `lib/config.js`.
 
-**Can I add prices later?** Yes — a developer can add a `price` field to `sanity/schemas/product.js` and display it; the rest of the setup stays the same.
+**Can I add prices later?** Yes — a developer can add a `price` field to `cms/schemas/product.js` and display it; the rest of the setup stays the same.

@@ -2,7 +2,7 @@
 // Optional catch-all so nested Studio routes (/studio/structure/...) resolve here.
 import { NextStudio } from 'next-sanity/studio';
 import config from '@/sanity.config';
-import { isSanityConfigured } from '@/sanity/env';
+import { isSanityConfigured } from '@/cms/env';
 import StudioSetup from '@/components/StudioSetup';
 
 export const dynamic = 'force-static';
