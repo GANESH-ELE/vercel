@@ -11,7 +11,15 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { createClient } from '@sanity/client';
-import { products, categories, brands } from '../lib/data.js';
+import * as dataModule from '../lib/data.js';
+
+// Works whether tsx exposes lib/data.js as ESM named exports or as a CJS default object.
+const data = dataModule.products ? dataModule : (dataModule.default || {});
+const { products, categories, brands } = data;
+if (!products || !categories || !brands) {
+  console.error('Could not load demo data from lib/data.js');
+  process.exit(1);
+}
 
 // ---- tiny .env loader (no extra dependency) ----
 for (const file of ['.env.local', '.env']) {
@@ -99,12 +107,20 @@ async function run() {
       image: main, gallery,
       specifications: (p.specifications || []).map((s, i) => ({ _type: 'spec', _key: `s${i + 1}`, label: s.label, value: s.value })),
       tags: p.tags || [],
-      relatedProducts: (p.relatedProductIds || [])
-        .map((id) => idToSlug.get(id)).filter(Boolean)
-        .map((slug, i) => ({ _type: 'reference', _ref: `product-${slug}`, _key: `r${i + 1}` })),
+      relatedProducts: [], // linked in pass 2 (targets may not exist yet)
     });
     console.log(`  ✓ ${p.name}`);
   }
+
+  // Pass 2: link related products now that every product exists.
+  console.log('\nLinking related products');
+  for (const p of products) {
+    const related = (p.relatedProductIds || [])
+      .map((id) => idToSlug.get(id)).filter(Boolean)
+      .map((slug, i) => ({ _type: 'reference', _ref: `product-${slug}`, _key: `r${i + 1}` }));
+    if (related.length) await client.patch(`product-${p.slug}`).set({ relatedProducts: related }).commit();
+  }
+  console.log('  ✓ done');
 
   console.log('\nSeed complete. Open /studio to see your content.');
 }

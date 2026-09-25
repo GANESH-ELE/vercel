@@ -35,6 +35,11 @@ Next.js 15 App Router (JavaScript), Tailwind, shadcn/ui, yarn. Mock data in `lib
 - googleapis pinned to 148.0.0 (Node 20 compat)
 - Automated frontend tests (deep_testing_frontend) run on desktop + mobile: ALL 11 scenarios PASSED
 
+## Sanity CONNECTED (2025-06)
+- Project ID 67e0wbk7, dataset production; token in /app/.env (SANITY_WRITE_TOKEN). Seeded: 16 products, 10 categories, 9 brands, 19 images, related links (seed is 2-pass for reference integrity).
+- Verified: site reads from Sanity (cdn.sanity.io images), POST /api/enquiries -> Sanity enquiry doc saved, /studio renders real Studio login.
+- Still pending: Google Sheets credentials (optional). User must log in to /studio with their Sanity account.
+
 ## Credentials needed (pending from user)
 - Sanity: NEXT_PUBLIC_SANITY_PROJECT_ID, NEXT_PUBLIC_SANITY_DATASET, SANITY_WRITE_TOKEN
 - Google: GOOGLE_SERVICE_ACCOUNT_EMAIL, GOOGLE_PRIVATE_KEY, GOOGLE_SHEETS_ID, GOOGLE_SHEETS_RANGE

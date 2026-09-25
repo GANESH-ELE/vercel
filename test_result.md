@@ -234,6 +234,9 @@ frontend:
     status_history:
       - working: true
         agent: "main"
+        comment: "UPDATE: Sanity connected (project 67e0wbk7). Seeded 16/10/9 + 19 images. Site verified serving cdn.sanity.io images; enquiry saved to Sanity; /studio renders real Studio login screen."
+      - working: true
+        agent: "main"
         comment: "All pages now read via lib/catalog.js (Sanity GROQ when NEXT_PUBLIC_SANITY_PROJECT_ID set, else lib/data.js demo). /studio renders setup screen when unconfigured (verified 200), NextStudio when configured (untested - awaiting user's Sanity keys). Production `next build` passes. Dev heap raised to 1400MB in package.json because Studio bundle OOMs at 512MB."
 
   - task: "Enquiry capture API POST /api/enquiries (Sanity + Google Sheets + Mongo backup) wired to EnquiryForm"
