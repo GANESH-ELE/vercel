@@ -33,6 +33,7 @@ Next.js 15 App Router (JavaScript), Tailwind, shadcn/ui, yarn. Mock data in `lib
 - Production build verified; dev heap raised to 1400MB (Studio bundle)
 - Zip for independent hosting: /app/sri-ganesh-electricals-website.zip (excludes node_modules/.next/.git/.env)
 - googleapis pinned to 148.0.0 (Node 20 compat)
+- Automated frontend tests (deep_testing_frontend) run on desktop + mobile: ALL 11 scenarios PASSED
 
 ## Credentials needed (pending from user)
 - Sanity: NEXT_PUBLIC_SANITY_PROJECT_ID, NEXT_PUBLIC_SANITY_DATASET, SANITY_WRITE_TOKEN
